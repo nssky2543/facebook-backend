@@ -33,6 +33,12 @@ export class User {
   @Column({ nullable: true })
   profilePicture: string;
 
+  @Column({ default: "member"})
+  role: string;
+
+  @Column({ default: true })
+  is_active: boolean;
+
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
 
