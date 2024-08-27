@@ -5,7 +5,6 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-
 import { AppModule } from './app.module';
 
 async function bootstrap() {
@@ -15,12 +14,14 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .build();
+  .build();
+  
+  app.enableCors();
+  app.setGlobalPrefix('api');
+
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
 
-  app.setGlobalPrefix('api');
-  
   await app.listen(4000);
 }
 
