@@ -26,4 +26,9 @@ export class UsersController {
   async updateUser(@Param('id') id: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(id, updateUserDto);
   }
+
+  @Put(':id/setIsActive')
+  async setIsActive(@Param('id') id: number) {
+    return this.usersService.setIsActive(id);
+  }
 }

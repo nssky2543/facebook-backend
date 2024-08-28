@@ -9,6 +9,7 @@ import { CommentsModule } from './comments/comments.module';
 import { LikesModule } from './likes/likes.module';
 import { MessagesModule } from './messages/messages.module';
 import { FriendsModule } from './friends/friends.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @Module({
@@ -34,6 +35,7 @@ import { FriendsModule } from './friends/friends.module';
     LikesModule,
     MessagesModule,
     FriendsModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

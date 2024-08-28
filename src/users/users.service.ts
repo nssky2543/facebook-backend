@@ -30,9 +30,18 @@ export class UsersService {
   }
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
+    if (updateUserDto.password) {
+      const password = await bcrypt.hash(updateUserDto.password, 10);
+      updateUserDto.password = password;
+    }
     await this.userRepository.update(id, updateUserDto);
     return this.userRepository.findOne({
       where: { id },
     });
+  }
+
+  async setIsActive(id: number): Promise<User> {
+    await this.userRepository.update(id, { is_active: true });
+    return this.userRepository.findOne({ where: { id } });
   }
 }

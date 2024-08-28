@@ -6,6 +6,7 @@ import {
 } from '@nestjs/platform-fastify';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import * as dotenv from 'dotenv';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(
@@ -15,7 +16,8 @@ async function bootstrap() {
 
   const config = new DocumentBuilder()
   .build();
-  
+
+  dotenv.config(); 
   app.enableCors();
   app.setGlobalPrefix('api');
 

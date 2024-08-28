@@ -25,6 +25,9 @@ export class User {
   lastName: string;
 
   @Column({ nullable: true })
+  sex: string;
+
+  @Column({ nullable: true })
   bio: string;
 
   @Column({ type: 'date' })
@@ -32,6 +35,12 @@ export class User {
 
   @Column({ nullable: true })
   profilePicture: string;
+
+  @Column({ default: "member"})
+  role: string;
+
+  @Column({ default: true })
+  is_active: boolean;
 
   @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
   createdAt: Date;
