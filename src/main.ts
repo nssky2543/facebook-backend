@@ -16,9 +16,9 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-  .build();
+    .build();
 
-  dotenv.config(); 
+  dotenv.config();
   app.enableCors();
   app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe());
