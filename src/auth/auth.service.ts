@@ -13,7 +13,7 @@ export class AuthService {
     @InjectRepository(User)
     private userRepository: Repository<User>,
     private jwtService: JwtService,
-  ) {}
+  ) { }
 
   async login(loginDto: LoginDto) {
     const user = await this.userRepository.findOne({
@@ -39,6 +39,14 @@ export class AuthService {
 
     if (existingUser) {
       return 'User with that email already exists';
+    }
+
+    const dateOfBirth = new Date(registerDto.dateOfBirth);
+    if (isNaN(dateOfBirth.getTime())) {
+      return {
+        statusCode: 400,
+        message: 'Invalid date format for dateOfBirth',
+      };
     }
 
     const newUser = this.userRepository.create({
