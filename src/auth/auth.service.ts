@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../users/entities/user.entity';
@@ -21,11 +21,13 @@ export class AuthService {
     });
 
     if (!user || !(await bcrypt.compare(loginDto.password, user.password))) {
-      return 'Invalid email or password'
+      throw new UnauthorizedException('Invalid email or password');
     }
 
     const { id, email, username } = user;
     return {
+      message: 'Login successful',
+      statusCode: 200,
       access_token: this.jwtService.sign({ id, email, username }),
     };
   }
@@ -38,7 +40,7 @@ export class AuthService {
     });
 
     if (existingUser) {
-      return 'User with that email already exists';
+      throw new ConflictException('Email or username already exists');
     }
 
     const newUser = this.userRepository.create({
