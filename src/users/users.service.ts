@@ -24,10 +24,25 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
+    const existingUserByUsername = await this.userRepository.findOne({
+      where: { username: createUserDto.username }
+    });
+    if (existingUserByUsername) {
+      throw new Error('Username already exists');
+    }
+  
+    const existingUserByEmail = await this.userRepository.findOne({
+      where: { email: createUserDto.email }
+    });
+    if (existingUserByEmail) {
+      throw new Error('Email already exists');
+    }
+  
     const password = await bcrypt.hash(createUserDto.password, 10);
     const user = this.userRepository.create({ ...createUserDto, password });
     return this.userRepository.save(user);
   }
+  
 
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     if (updateUserDto.password) {
